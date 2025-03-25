@@ -1,14 +1,26 @@
 import asyncio
-from params import *
+from logic_api.params import *
+import logging
+import json
+
+logging.basicConfig(level=logging.INFO)
 
 CURRENT_PRICE = START_PRICE
 
-async def price_generator(end_price=END_PRICE,start_price=START_PRICE,step=STEP):
-    global current_price, direction
+
+async def price_generator(end_price=END_PRICE,start_price=START_PRICE,step=STEP,direction = DIRECTION):
+    global CURRENT_PRICE
     while True:
-        if current_price >= end_price:
+        if CURRENT_PRICE >= end_price:
             direction = -1
-        elif current_price <= start_price:
+        elif CURRENT_PRICE <= start_price:
             direction = 1
-        current_price += direction * step
-        await asyncio.sleep(1)
+        
+        CURRENT_PRICE += direction * step
+        logging.info(f"Updated price: {CURRENT_PRICE}")
+        filename = "./json/price.json" 
+        with open(filename, "w") as f:
+           json.dump(CURRENT_PRICE, f, indent=4)
+        await asyncio.sleep(2)
+
+

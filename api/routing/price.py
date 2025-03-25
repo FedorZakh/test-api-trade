@@ -1,9 +1,13 @@
 from fastapi import APIRouter
-from logic_api.action import CURRENT_PRICE
+import json
+
 router = APIRouter()
 
-
-
 @router.get("/price")
-def get_price():
-    return [CURRENT_PRICE]
+async def get_price():
+    
+    filename = "./json/price.json" 
+    with open(filename, "r") as f:
+        data = json.load(f) 
+    return data
+    
