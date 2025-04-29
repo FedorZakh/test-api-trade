@@ -15,11 +15,13 @@ def test():
 
 @router.post("/order_buy")
 def add_order_buy(order: OrderSave):
+    db.create_table_levels()
     db.add_order_buy(order.name, order.order_price)
     return {"status": "ok", "message": "Order buy added"}
 
 
 @router.post("/order_sell")
-def add_order_buy(order: OrderSave):
-    db.add_order_buy(order.name, order.order_price)
+def add_order_sell(order: OrderSave):
+    db.create_table_levels()
+    db.add_order_sell(order.name, order.order_price)
     return {"status": "ok", "message": "Order buy added"}
