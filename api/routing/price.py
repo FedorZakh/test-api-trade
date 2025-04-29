@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from data_req.queries import DatabaseManager
-
-# import json
+from data_req.schemas import OrderSave
 from logic_api.action import get_price
 from logic_api.params import *
 
@@ -13,7 +12,14 @@ db = DatabaseManager("database.db")
 def test():
     return get_price()
 
-    # filename = "./json/price.json"
-    # with open(filename, "r") as f:
-    #     data = json.load(f)
-    # return data
+
+@router.post("/order_buy")
+def add_order_buy(order: OrderSave):
+    db.add_order_buy(order.name, order.order_price)
+    return {"status": "ok", "message": "Order buy added"}
+
+
+@router.post("/order_sell")
+def add_order_buy(order: OrderSave):
+    db.add_order_buy(order.name, order.order_price)
+    return {"status": "ok", "message": "Order buy added"}

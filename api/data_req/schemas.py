@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class OrderRequest(BaseModel):
+class OrderSave(BaseModel):
     name: str
     order_price: float
