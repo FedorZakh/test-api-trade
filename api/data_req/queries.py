@@ -24,8 +24,18 @@ class DatabaseManager:
                 )"""
             )
 
-    def add_order_buy(self, order):
-        pass
+    def add_order_buy(self, name: str, order_price: float):
+        """Добавляет ордер покупки"""
+        with sq.connect(self.db_path) as conn:
+            conn.execute(
+                "INSERT INTO orders_buy (name, order_price) VALUES (?, ?)",
+                (name, order_price),
+            )
 
-    def add_order_sell(self, order):
-        pass
+    def add_order_sell(self, name: str, order_price: float):
+        """Добавляет ордер продажи"""
+        with sq.connect(self.db_path) as conn:
+            conn.execute(
+                "INSERT INTO orders_sell (name, order_price) VALUES (?, ?)",
+                (name, order_price),
+            )
