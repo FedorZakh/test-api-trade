@@ -11,6 +11,7 @@ class DatabaseManager:
                 """CREATE TABLE IF NOT EXISTS orders_buy (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
+                    quantity REAL NOT NULL,
                     order_price REAL NOT NULL,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
                 )"""
@@ -19,23 +20,32 @@ class DatabaseManager:
                 """CREATE TABLE IF NOT EXISTS orders_sell (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
+                    quantity REAL NOT NULL,
                     order_price REAL NOT NULL,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
                 )"""
             )
 
-    def add_order_buy(self, name: str, order_price: float):
+    def add_order_buy(self, name: str, quantity: float, order_price: float):
         """Добавляет ордер покупки"""
         with sq.connect(self.db_path) as conn:
             conn.execute(
-                "INSERT INTO orders_buy (name, order_price) VALUES (?, ?)",
-                (name, order_price),
+                "INSERT INTO orders_buy (name, quantity, order_price ) VALUES (?, ?, ?)",
+                (
+                    name,
+                    quantity,
+                    order_price,
+                ),
             )
 
-    def add_order_sell(self, name: str, order_price: float):
+    def add_order_sell(self, name: str, quantity: float, order_price: float):
         """Добавляет ордер продажи"""
         with sq.connect(self.db_path) as conn:
             conn.execute(
-                "INSERT INTO orders_sell (name, order_price) VALUES (?, ?)",
-                (name, order_price),
+                "INSERT INTO orders_sell (name, quantity, order_price) VALUES (?, ?, ?)",
+                (
+                    name,
+                    quantity,
+                    order_price,
+                ),
             )
